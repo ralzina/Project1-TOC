@@ -1,4 +1,4 @@
-<!-- ## instructions to geenrate PAT: -->
+<!-- ## instructions to generate PAT: -->
 
 
 <!-- * Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
@@ -10,36 +10,36 @@
 
 ## Student Instructions to clone the repository and how to submit the assignment:
 ------------------
-* From ypur browser, go to [GITHUB URL](https://github.com/pkogge/Project1-TOC) and click the fork button as shown in the picture below
+* From your browser, go to [GITHUB URL](https://github.com/pkogge/Project1-TOC) and click the fork button as shown in the picture below
 
 
 ![fork_button](documentation/assets/fork_button.png "fork button")
 
 
-* you will now enter the fork screen, from the fork screen make sure to select your own github account which is highlighted in screen below (for instance, I have selected my own personal account), after that click on the `create fork` button highlighted in oragne arrow and box.
+* You will now enter the fork screen, from here make sure to select your own github account which is highlighted in screen below (for instance, I have selected my own personal account), after that click on the `create fork` button highlighted in orange arrow and box.
 
 ![fork_screen](documentation/assets/fork_screen.png "fork screen")
 
-* You will now see the screen which looks like below, first red box on left should reflect your own github account and should say forked from `forked from pkogge/Project1-TOC` then you can follow general instructions of cloning the github repository. Here is the [Docs Link](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) that help you to clone the github repository on your computer.
+* You will now see the screen which looks like below, the first red box on left should reflect your own github account and should say forked from `forked from pkogge/Project1-TOC` then you can follow general instructions of cloning the github repository. Here is the [Docs Link](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) that help you to clone the github repository on your computer.
 
 ![cloned_repo](documentation/assets/cloned_repo.png "cloned_repo")
 
-* Once you clone the repository open the project in IDE of your choice.
+* Once you clone the repository open the project in the IDE of your choice.
 
-### Getting started with UV installation
+### Getting started with the python support package manager "UV" installation
 ----------------
 
 * start of by installing the `UV` in your machine here is the [instructions page](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_1) that helps you to install the `UV`.
 
-* `UV` is python package manager, immediately after installing it run command `uv sync` which installs the pytests and other required packages.
+* Immediately after installing it run command `uv sync` which installs the pytests and other required packages.
 
-* NOTE: If you are struggling with installing `UV` please feel to reach me out via slack, I can help you navigate so.
+* NOTE: If you are struggling with installing `UV` please feel to reach me out via slack, I can help you navigate so. lvadnala@nd.edu
 
-* This project template is equipped with all the packages required for your project no additional python packages are required to be installed, but if you want to install additional python packages make sure use the command `uv add <python-package-name>`, mostly it is not useful.
+* This project template is equipped with all the packages required for your project. No additional python packages are required to be installed, but if you want to install additional python packages make sure use the command `uv add <python-package-name>`, mostly it is not useful.
 
 ### How can we run the code using UV
 ----------------
-* for this project am using UV to demonstrate to run the code, basically you need to use the command `uv run main.py` from root of the project folder in terminal to you would see your code executes.
+* for this project I am using UV to demonstrate to run the code, basically you need to use the command `uv run main.py` from root of the project folder in terminal to you would see your code executes.
 * immediately after cloning the repository, and you didnt do any code changes, if you run the command `uv run main.py` you would see below results.
 
 ```
