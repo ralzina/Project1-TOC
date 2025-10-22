@@ -1,14 +1,14 @@
 Overview: These instructions provide you with a skeleton python definition for each problem type. After cloning this repo, you will modify only those functions that you have signed up for (at most 3 for a three person group)
 * You will modify the body of this code for your implementation.
-* Use the arguments to the function as the source of a test case (you do not need to read or write any files with this procedure).
+* Assume the arguments to the function provide a test case (you do not need to read test cases rom any files with this procedure).
 * Instructions are also included on running your code when you want to test it.
-* The testing infrastructure will feed the test problems to your code one at a time, and will accumulate your responses to it.
+* The testing infrastructure will feed the test problems to your code one at a time, will accumulate your responses to it, and will return a score.
 * The "input" folder holds the test cases that the above mechanism will use when you run your tests.
 * The test cases for grading are separate, and are not visible to you.
 * If you need to access other python packages in your code, the UV package discussed below can give your functions access to them.
 * Send all questions about this infrastructure to Laxminarayana Vadnala lvadnala@nd.edu
 
-<!-- ## instructions to generate PAT: -->
+<!-- ## instructions to generate a PAT (a Personal Access Token): -->
 
 
 <!-- * Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
@@ -18,7 +18,7 @@ Overview: These instructions provide you with a skeleton python definition for e
 * Generate token and copy it -->
 
 
-## Student Instructions to clone the repository and how to submit the assignment:
+## Student Instructions to clone the repository and how to run and finally submit the assignment:
 ------------------
 * From your browser, go to [GITHUB URL](https://github.com/pkogge/Project1-TOC) and click the fork button as shown in the picture below
 
@@ -30,20 +30,20 @@ Overview: These instructions provide you with a skeleton python definition for e
 
 ![fork_screen](documentation/assets/fork_screen.png "fork screen")
 
-* You will now see the screen which looks like below, the first red box on left should reflect your own github account and should say forked from `forked from pkogge/Project1-TOC` then you can follow general instructions of cloning the github repository. Here is the [Docs Link](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) that help you to clone the github repository on your computer.
+* You will now see the screen which looks like below, the first red box on left should reflect your own github account and should say forked from `forked from pkogge/Project1-TOC.` Then you can follow general instructions of cloning the github repository. Here is the [Docs Link](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) that can help you to clone the github repository on your computer.
 
 ![cloned_repo](documentation/assets/cloned_repo.png "cloned_repo")
 
-* Once you clone the repository open the project in the IDE of your choice.
+* Once you clone the repository, open the project in the IDE of your choice.
 
-### Getting started with the python support package manager "UV" installation
+### Getting started with the python support package manager "UV" installation.
 ----------------
 
 * Start  by installing `UV` in your machine. Here is the [instructions page](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_1) that helps you to install the `UV`.
 
 * Immediately after installing it run command `uv sync` which installs the pytests and other required packages.
 
-* NOTE: If you are struggling with installing `UV` please feel to reach me out via slack, I can help you navigate so. lvadnala@nd.edu
+* NOTE: If you are struggling with installing `UV` please feel to reach me out via slack, I can help you navigate. lvadnala@nd.edu
 
 * This project template is equipped with all the packages required for your project. No additional python packages are required to be installed, but if you want to install additional python packages make sure use the command `uv add <python-package-name>` (mostly it is not useful).
 
@@ -62,7 +62,7 @@ Hello from project1_toc!
 ### Making changes to the code and running the test cases of your own
 ----------------
 
-* Here is the folder structure that every student should make changes to. This is personalized for SAT, but the others are similar.
+* Here is the folder structure that every student should make changes to. This is personalized for SAT, but the others are similar. The src directory hold the code you want to modify.
 
 ```
 .
@@ -75,9 +75,9 @@ Hello from project1_toc!
 |-- main.py
 ```
 
-* `src/entrypoint.py` file contains the function called as `main.` Make sure to add all your files into the `src` folder and make sure to use the `entrypoint.py` file's main function as your main function Dont change this structure as if you do the automation wont be able to perform the grading.
-* `results` folder is where you should save your results from the project. For SAT the project is expected to generate `cnf` files which are basically the CSV files, make sure to save all the results generated by code to results folder (!!! This is most important otherwise you might loose points).
-* `module_tests` is the folder where you can add your own custom test cases. If you are familiar with pytests you can do so, but it is not compulsory to add test cases to the project, its totally the students choice to add, since the pytests have a little learning curve.
+* The `src/entrypoint.py` file contains the function called as `main.` Make sure to add all your auxikiary files into the `src` folder and make sure to use the `entrypoint.py` file's main function as your main function Dont change this structure as if you do the automation wont be able to perform the grading.
+* The `results` folder is where you should save your results from the project. For SAT the project is expected to generate `cnf` files which are basically the CSV files, make sure to save all the results generated by code to results folder (!!! This is most important otherwise you might loose points).
+* The `module_tests` is the folder where you can add your own custom test cases. If you are familiar with pytests you can do so, but it is not compulsory to add test cases to the project, its totally the students choice to add, since the pytests have a little learning curve.
 * `main.py` please dont edit this file, this is the main file and it should stay like this.
 * Once you add your own test cases please make sure to run the `uv run pytest -s` (optional step, should only perform this if you haev added test cases as per the pytest standard)
 
