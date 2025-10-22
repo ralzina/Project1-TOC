@@ -44,3 +44,43 @@ def parse_multi_instance_dimacs(path: str) -> Tuple[str, int, List[List[int]]]:
         else:
             i += 1
     return instances
+
+
+def parse_multi_instance_graph(path: str):
+    """
+    Parse file into list of (instance_id, k, n_vertices, edges)
+    Each instance starts with `c` and `p edge` lines.
+    """
+    instances = []
+    with open(path) as f:
+        lines = [ln.strip() for ln in f if ln.strip()]
+
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if line.startswith("c "):
+            parts = line.split()
+            instance_id = parts[1] if len(parts) > 1 else str(len(instances) + 1)
+            k = int(parts[2]) if len(parts) > 2 else 3
+            i += 1
+            if i >= len(lines) or not lines[i].startswith("p cnf"):
+                raise ValueError(f"Expected 'p cnf' after line: {line}")
+            _, _, n_vertices_str, n_edges_str = lines[i].split()
+            n_vertices = int(n_vertices_str)
+            n_edges = int(n_edges_str)
+            i += 1
+            edges = []
+            # Read next n_edges lines (edge pairs)
+            for _ in range(n_edges):
+                if i >= len(lines) or lines[i].startswith("c "):
+                    break
+                parts = lines[i].replace(",", " ").split()
+                if len(parts) >= 2:
+                    u, v = int(parts[0]), int(parts[1])
+                    edges.append((u - 1, v - 1))  # use 0-based indexing
+                i += 1
+            instances.append((instance_id, k, n_vertices, edges))
+        else:
+            i += 1
+
+    return instances

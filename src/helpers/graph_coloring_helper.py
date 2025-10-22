@@ -1,19 +1,19 @@
 from abc import ABC, abstractmethod
 import os
-from src.helpers.dmaics_parser import parse_multi_instance_dimacs
+from src.helpers.dmaics_parser import parse_multi_instance_graph
 from src.helpers.constants import RESULTS_FOLDER, CONFIGURATION_FILE_PATH
-from typing import List, Tuple, Dict, Any
+from typing import List, Tuple, Dict, Any, Optional
 import json
 import csv
 import time
 from src.helpers.project_selection_enum import ProjectSelection, SubProblemSelection
 
 
-class SatSolverAbstractClass(ABC):
+class GraphColoringAbstractClass(ABC):
 
     def __init__(self, 
                     cnf_file_input_path: str,
-                    result_file_name:str = "sat_solver_results",
+                    result_file_name:str = "graph_coloring_results",
                     results_folder_path: str = RESULTS_FOLDER):
         self.cnf_file_input_path = cnf_file_input_path
         self.results_folder_path = results_folder_path
@@ -44,93 +44,89 @@ class SatSolverAbstractClass(ABC):
         return sub_probs
         
     def parse_input_file(self):
-        return parse_multi_instance_dimacs(self.cnf_file_input_path)
+        return parse_multi_instance_graph(self.cnf_file_input_path)
     
     def save_results(self, run_results: List[Any], sub_problem):
         # Write to CSV
         temp_result = os.path.join(self.results_folder_path, f"{sub_problem}_{self.result_file_name}.csv")
         with open(temp_result, "w", newline="") as f:
             w = csv.writer(f)
-            w.writerow(["instance_id", "n_vars", "n_clauses", "method",
-                        "satisfiable", "time_seconds", "solution"])
+            w.writerow(["instance_id", "n_vertices", "n_edges", "k",
+                    "method", "colorable", "time_seconds", "coloring"])
             w.writerows(run_results)
         print(f"\nResults written to {temp_result}")
     
     @abstractmethod
-    def sat_backtracking(self, n_vars:int, clauses:List[List[int]]) -> Tuple[bool, Dict[int, bool]]:
+    def coloring_backtracking(self, n_vertices: int, edges: List[Tuple[int]], k:int) -> Tuple[bool, Optional[Dict[int, bool]]]:
         pass
 
     @abstractmethod
-    def sat_bruteforce(self, n_vars:int, clauses:List[List[int]]) -> Tuple[bool, Dict[int, bool]]:
+    def coloring_bruteforce(self, n_vertices: int, edges: List[Tuple[int]], k:int) -> Tuple[bool, Optional[Dict[int, bool]]]:
         pass
 
     @abstractmethod
-    def sat_simple(self, n_vars:int, clauses:List[List[int]]) -> Tuple[bool, Dict[int, bool]]:
+    def coloring_simple(self, n_vertices: int, edges: List[Tuple[int]], k:int) -> Tuple[bool, Optional[Dict[int, bool]]]:
         pass
 
     @abstractmethod
-    def sat_bestcase(self, n_vars:int, clauses:List[List[int]]) -> Tuple[bool, Dict[int, bool]]:
+    def coloring_bestcase(self, n_vertices: int, edges: List[Tuple[int]], k:int) -> Tuple[bool, Optional[Dict[int, bool]]]:
         pass
 
     def run(self):
         results = []
         
-        for inst_id, n_vars, clauses in self.solution_instances:
+        for instance_id, k, n_vertices, edges in self.solution_instances:
 
             if SubProblemSelection.brute_force in self.sub_problems:
                 t0 = time.perf_counter()
-                bt_ok, bt_assign = self.sat_bruteforce(n_vars, clauses)
+                bt_ok, bt_assign = self.coloring_bruteforce(n_vertices, edges, k)
                 bt_time = time.perf_counter() - t0
-                results.append([inst_id, n_vars, len(clauses), 
-                            "S" if bt_ok else "U", 
-                            bt_time, "BruteForce",
-                            str(bt_assign)])
+                results.append([instance_id, n_vertices, len(edges), k,
+                        "BruteForce", "YES" if bt_ok else "NO",
+                        f"{bt_time:.6f}", str(bt_assign)])
         
         if SubProblemSelection.brute_force in self.sub_problems:
             self.save_results(results, SubProblemSelection.brute_force.name)
             results = []
 
-        for inst_id, n_vars, clauses in self.solution_instances:
+        for instance_id, k, n_vertices, edges in self.solution_instances:
 
             if SubProblemSelection.btracking in self.sub_problems:
                 t0 = time.perf_counter()
-                bt_ok, bt_assign = self.sat_backtracking(n_vars, clauses)
+                bt_ok, bt_assign = self.coloring_backtracking(n_vertices, edges, k)
                 bt_time = time.perf_counter() - t0
-                results.append([inst_id, n_vars, len(clauses), 
-                            "S" if bt_ok else "U", 
-                            bt_time, "BackTracking",
-                            str(bt_assign)])
+                results.append([instance_id, n_vertices, len(edges), k,
+                        "BackTracking", "YES" if bt_ok else "NO",
+                        f"{bt_time:.6f}", str(bt_assign)])
         
         if SubProblemSelection.btracking in self.sub_problems:
             self.save_results(results, SubProblemSelection.btracking.name)
             results = []
 
-        for inst_id, n_vars, clauses in self.solution_instances:
+        for instance_id, k, n_vertices, edges in self.solution_instances:
 
             if SubProblemSelection.simple in self.sub_problems:
                 t0 = time.perf_counter()
-                bt_ok, bt_assign = self.sat_simple(n_vars, clauses)
+                bt_ok, bt_assign = self.coloring_simple(n_vertices, edges, k)
                 bt_time = time.perf_counter() - t0
-                results.append([inst_id, n_vars, len(clauses), 
-                            "S" if bt_ok else "U", 
-                            bt_time, "Simple",
-                            str(bt_assign)])
+                results.append([instance_id, n_vertices, len(edges), k,
+                        "Simple", "YES" if bt_ok else "NO",
+                        f"{bt_time:.6f}", str(bt_assign)])
         
         if SubProblemSelection.simple in self.sub_problems:
             self.save_results(results, SubProblemSelection.simple.name)
             results = []
         
 
-        for inst_id, n_vars, clauses in self.solution_instances:
+        for instance_id, k, n_vertices, edges in self.solution_instances:
 
             if SubProblemSelection.best_case in self.sub_problems:
                 t0 = time.perf_counter()
-                bt_ok, bt_assign = self.sat_bestcase(n_vars, clauses)
+                bt_ok, bt_assign = self.coloring_bestcase(n_vertices, edges, k)
                 bt_time = time.perf_counter() - t0
-                results.append([inst_id, n_vars, len(clauses), 
-                            "S" if bt_ok else "U", 
-                            bt_time, "BestCase",
-                            str(bt_assign)])
+                results.append([instance_id, n_vertices, len(edges), k,
+                        "BestCase", "YES" if bt_ok else "NO",
+                        f"{bt_time:.6f}", str(bt_assign)])
         
         if SubProblemSelection.best_case in self.sub_problems:
             self.save_results(results, SubProblemSelection.best_case.name)
