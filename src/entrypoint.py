@@ -11,19 +11,16 @@ def main():
 
     if not os.path.exists(CONFIGURATION_FILE_PATH):
         brief_about_project()
-
     selection, sub_problem = parse_config(CONFIGURATION_FILE_PATH)
+
+    
     if selection["name"] == ProjectSelection.sat.name:
         solver = SatSolver(INPUT_FILE)
-    elif selection["name"] == ProjectSelection.k_partite.name:
-        solver = None
     elif selection["name"] == ProjectSelection.bin_packing.name:
         solver = None
     elif selection["name"] == ProjectSelection.hamiltonian.name:
         solver = None
     elif selection["name"] == ProjectSelection.graph_coloring.name:
-        solver = None
-    elif selection["name"] == ProjectSelection.k_clique.name:
         solver = None
     
     if solver:
