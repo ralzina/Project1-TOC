@@ -38,7 +38,7 @@
 
 * This project template is equipped with all the packages required for your project. No additional python packages are required to be installed, but if you want to install additional python packages make sure use the command `uv add <python-package-name>` (mostly it is not useful).
 
-### How can we run the code using UV
+### How can we run the code using UV when other packages are needed
 ----------------
 * For this project I am using UV to demonstrate to run the code. Basically you need to use the command `uv run main.py` from the root of the project folder in the terminal to see your code executes.
 * Immediately after cloning the repository, and you didnt do any code changes, if you run the command `uv run main.py` you would see the results below.
