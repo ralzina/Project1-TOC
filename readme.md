@@ -1,10 +1,11 @@
 Overview: These instructions provide you with a skeleton python definition for each problem type. After cloning this repo, you will modify only those functions that you have signed up for (at most 3 for a three person group)
-* You will modify the body of this code for your implementation.
+* You will modify the body of your selected code for your implementation. Do not change the arguments.
+* Your output should be a csv file - format given in the python comments for each function.
 * Assume the arguments to the function provide a test case (you do not need to read test cases rom any files with this procedure).
 * Instructions are also included on running your code when you want to test it.
 * The testing infrastructure will feed the test problems to your code one at a time, will accumulate your responses to it, and will return a score.
 * The "input" folder holds the test cases that the above mechanism will use when you run your tests.
-* The test cases for grading are separate, and are not visible to you.
+* The test cases to be for grading are separate, and are not visible to you.
 * If you need to access other python packages in your code, the UV package discussed below can give your functions access to them.
 * Send all questions about this infrastructure to Laxminarayana Vadnala lvadnala@nd.edu
 
