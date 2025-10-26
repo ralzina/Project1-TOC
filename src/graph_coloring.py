@@ -31,6 +31,14 @@ OUTPUT:
 -------
 A CSV file named 'resultsfile.csv' with columns:
 instance_id, n_vertices, n_edges, k, method, colorable, time_seconds, coloring
+
+EXAMPLE OUTPUT
+--------------
+instance_id,n_vertices,n_edges,k,method,colorable,time_seconds,coloring
+3,4,10,2,BruteForce,NO,0.000011,[]
+4,4,10,2,BruteForce,NO,0.000004,[]
+5,4,10,2,BruteForce,YES,0.000003,"[0, 0, 1, 1]"
+
 """
 
 from src.helpers.graph_coloring_helper import GraphColoringAbstractClass
@@ -39,6 +47,14 @@ from typing import List, Optional, Dict, Tuple
 
 
 class GraphColoring(GraphColoringAbstractClass):
+    """
+        NOTE: The output of the CSV file should be same as EXAMPLE OUTPUT above otherwise you will loose marks
+        For this you dont need to save anything just make sure to return exact related output.
+        
+        For ease look at the Abstract Solver class and basically we are having the run method which does the saving
+        of the CSV file just focus on the logic
+    """
+
 
     def coloring_backtracking(self, n_vertices: int, edges: List[Tuple[int]], k:int) -> Tuple[bool, Optional[Dict[int, bool]]]:
         pass

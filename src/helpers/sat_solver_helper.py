@@ -48,7 +48,9 @@ class SatSolverAbstractClass(ABC):
     
     def save_results(self, run_results: List[Any], sub_problem):
         # Write to CSV
-        temp_result = os.path.join(self.results_folder_path, f"{sub_problem}_{self.result_file_name}.csv")
+        dir_name, file_name = os.path.split(self.cnf_file_input_path)
+        file_name_only, ext = os.path.splitext(file_name)
+        temp_result = os.path.join(self.results_folder_path, f"{sub_problem}_{file_name_only}_{self.result_file_name}.csv")
         with open(temp_result, "w", newline="") as f:
             w = csv.writer(f)
             w.writerow(["instance_id", "n_vars", "n_clauses", "method",
@@ -81,9 +83,10 @@ class SatSolverAbstractClass(ABC):
                 t0 = time.perf_counter()
                 bt_ok, bt_assign = self.sat_bruteforce(n_vars, clauses)
                 bt_time = time.perf_counter() - t0
-                results.append([inst_id, n_vars, len(clauses), 
+                results.append([inst_id, n_vars, len(clauses),
+                                 "BruteForce",
                             "S" if bt_ok else "U", 
-                            bt_time, "BruteForce",
+                            bt_time,
                             str(bt_assign)])
         
         if SubProblemSelection.brute_force in self.sub_problems:
@@ -96,9 +99,10 @@ class SatSolverAbstractClass(ABC):
                 t0 = time.perf_counter()
                 bt_ok, bt_assign = self.sat_backtracking(n_vars, clauses)
                 bt_time = time.perf_counter() - t0
-                results.append([inst_id, n_vars, len(clauses), 
+                results.append([inst_id, n_vars, len(clauses),
+                            "BackTracking",
                             "S" if bt_ok else "U", 
-                            bt_time, "BackTracking",
+                            bt_time,
                             str(bt_assign)])
         
         if SubProblemSelection.btracking in self.sub_problems:
@@ -112,8 +116,9 @@ class SatSolverAbstractClass(ABC):
                 bt_ok, bt_assign = self.sat_simple(n_vars, clauses)
                 bt_time = time.perf_counter() - t0
                 results.append([inst_id, n_vars, len(clauses), 
+                                "Simple",
                             "S" if bt_ok else "U", 
-                            bt_time, "Simple",
+                            bt_time, 
                             str(bt_assign)])
         
         if SubProblemSelection.simple in self.sub_problems:
@@ -128,8 +133,9 @@ class SatSolverAbstractClass(ABC):
                 bt_ok, bt_assign = self.sat_bestcase(n_vars, clauses)
                 bt_time = time.perf_counter() - t0
                 results.append([inst_id, n_vars, len(clauses), 
+                                "BestCase",
                             "S" if bt_ok else "U", 
-                            bt_time, "BestCase",
+                            bt_time, 
                             str(bt_assign)])
         
         if SubProblemSelection.best_case in self.sub_problems:

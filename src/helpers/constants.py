@@ -18,3 +18,4 @@ def parse_config(config_path):
     selection = data["Selection"]
     sub_problem = data["Sub Problem"]
     return selection, sub_problem
+
