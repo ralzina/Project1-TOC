@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import os
-from src.helpers.dmaics_parser import parse_multi_instance_graph
+from src.helpers.dmaics_parser import parse_multi_instance_knapsack
 from src.helpers.constants import RESULTS_FOLDER, CONFIGURATION_FILE_PATH
 from typing import List, Tuple, Dict, Any, Optional
 import json
@@ -9,18 +9,18 @@ import time
 from src.helpers.project_selection_enum import ProjectSelection, SubProblemSelection
 
 
-class GraphColoringAbstractClass(ABC):
+class KnapsackAbstractClass(ABC):
 
     def __init__(self, 
-                    cnf_file_input_path: str,
-                    result_file_name:str = "graph_coloring_results",
+                    file_input_path: str,
+                    result_file_name:str = "knapsack_results",
                     results_folder_path: str = RESULTS_FOLDER):
-        self.cnf_file_input_path = cnf_file_input_path
+        self.file_input_path = file_input_path
         self.results_folder_path = results_folder_path
         self.result_file_name = result_file_name
         self.config_path = CONFIGURATION_FILE_PATH
         self.solution_instances = self.parse_input_file()
-        print(f"Parsed {len(self.solution_instances)} instances from {self.cnf_file_input_path}")
+        print(f"Parsed {len(self.solution_instances)} instances from {self.file_input_path}")
         self.sub_problems = self.set_config()
 
     def set_config(self):
@@ -44,46 +44,46 @@ class GraphColoringAbstractClass(ABC):
         return sub_probs
         
     def parse_input_file(self):
-        return parse_multi_instance_graph(self.cnf_file_input_path)
+        return parse_multi_instance_knapsack(self.file_input_path)
     
     def save_results(self, run_results: List[Any], sub_problem):
         # Write to CSV
-        dir_name, file_name = os.path.split(self.cnf_file_input_path)
+        dir_name, file_name = os.path.split(self.file_input_path)
         file_name_only, ext = os.path.splitext(file_name)
         temp_result = os.path.join(self.results_folder_path, f"{sub_problem}_{file_name_only}_{self.result_file_name}.csv")
         with open(temp_result, "w", newline="") as f:
             w = csv.writer(f)
-            w.writerow(["instance_id", "n_vertices", "n_edges", "k",
-                    "method", "colorable", "time_seconds", "coloring"])
+            w.writerow(["instance_id", "target", "n_coins",
+                    "method", "feasible", "time_seconds", "coin_combination"])
             w.writerows(run_results)
         print(f"\nResults written to {temp_result}")
     
     @abstractmethod
-    def coloring_backtracking(self, n_vertices: int, edges: List[Tuple[int]], k:int) -> Tuple[bool, Optional[Dict[int, bool]]]:
+    def knapsack_backtracking(self, target: int, coins: List[int]) -> Tuple[bool, Optional[Dict[int, bool]]]:
         pass
 
     @abstractmethod
-    def coloring_bruteforce(self, n_vertices: int, edges: List[Tuple[int]], k:int) -> Tuple[bool, Optional[Dict[int, bool]]]:
+    def knapsack_bruteforce(self, target: int, coins: List[int]) -> Tuple[bool, Optional[Dict[int, bool]]]:
         pass
 
     @abstractmethod
-    def coloring_simple(self, n_vertices: int, edges: List[Tuple[int]], k:int) -> Tuple[bool, Optional[Dict[int, bool]]]:
+    def knapsack_simple(self, target: int, coins: List[int]) -> Tuple[bool, Optional[Dict[int, bool]]]:
         pass
 
     @abstractmethod
-    def coloring_bestcase(self, n_vertices: int, edges: List[Tuple[int]], k:int) -> Tuple[bool, Optional[Dict[int, bool]]]:
+    def knapsack_bestcase(self, target: int, coins: List[int]) -> Tuple[bool, Optional[Dict[int, bool]]]:
         pass
 
     def run(self):
         results = []
         
-        for instance_id, k, n_vertices, edges in self.solution_instances:
+        for instance_id, target, coins in self.solution_instances:
 
             if SubProblemSelection.brute_force in self.sub_problems:
                 t0 = time.perf_counter()
-                bt_ok, bt_assign = self.coloring_bruteforce(n_vertices, edges, k)
+                bt_ok, bt_assign = self.knapsack_bruteforce(target, coins)
                 bt_time = time.perf_counter() - t0
-                results.append([instance_id, n_vertices, len(edges), k,
+                results.append([instance_id, target, len(coins),
                         "BruteForce", "YES" if bt_ok else "NO",
                         f"{bt_time:.6f}", str(bt_assign)])
         
@@ -91,13 +91,13 @@ class GraphColoringAbstractClass(ABC):
             self.save_results(results, SubProblemSelection.brute_force.name)
             results = []
 
-        for instance_id, k, n_vertices, edges in self.solution_instances:
+        for instance_id, target, coins in self.solution_instances:
 
             if SubProblemSelection.btracking in self.sub_problems:
                 t0 = time.perf_counter()
-                bt_ok, bt_assign = self.coloring_backtracking(n_vertices, edges, k)
+                bt_ok, bt_assign = self.knapsack_backtracking(target, coins)
                 bt_time = time.perf_counter() - t0
-                results.append([instance_id, n_vertices, len(edges), k,
+                results.append([instance_id, target, len(coins),
                         "BackTracking", "YES" if bt_ok else "NO",
                         f"{bt_time:.6f}", str(bt_assign)])
         
@@ -105,13 +105,13 @@ class GraphColoringAbstractClass(ABC):
             self.save_results(results, SubProblemSelection.btracking.name)
             results = []
 
-        for instance_id, k, n_vertices, edges in self.solution_instances:
+        for instance_id, target, coins in self.solution_instances:
 
             if SubProblemSelection.simple in self.sub_problems:
                 t0 = time.perf_counter()
-                bt_ok, bt_assign = self.coloring_simple(n_vertices, edges, k)
+                bt_ok, bt_assign = self.knapsack_simple(target, coins)
                 bt_time = time.perf_counter() - t0
-                results.append([instance_id, n_vertices, len(edges), k,
+                results.append([instance_id, target, len(coins),
                         "Simple", "YES" if bt_ok else "NO",
                         f"{bt_time:.6f}", str(bt_assign)])
         
@@ -120,13 +120,13 @@ class GraphColoringAbstractClass(ABC):
             results = []
         
 
-        for instance_id, k, n_vertices, edges in self.solution_instances:
+        for instance_id, target, coins in self.solution_instances:
 
             if SubProblemSelection.best_case in self.sub_problems:
                 t0 = time.perf_counter()
-                bt_ok, bt_assign = self.coloring_bestcase(n_vertices, edges, k)
+                bt_ok, bt_assign = self.knapsack_bestcase(target, coins)
                 bt_time = time.perf_counter() - t0
-                results.append([instance_id, n_vertices, len(edges), k,
+                results.append([instance_id, target, len(coins),
                         "BestCase", "YES" if bt_ok else "NO",
                         f"{bt_time:.6f}", str(bt_assign)])
         

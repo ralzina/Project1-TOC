@@ -84,3 +84,41 @@ def parse_multi_instance_graph(path: str):
             i += 1
 
     return instances
+
+def parse_multi_instance_knapsack(path: str):
+    """
+    Parse file into list of (instance_id, target, n_coins)
+    Each instance starts with `c` and `p coins` lines.
+    """
+    instances = []
+    with open(path) as f:
+        lines = [ln.strip() for ln in f if ln.strip()]
+
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if line.startswith("c "):
+            parts = line.split()
+            instance_id = parts[1]
+            target = int(parts[2])
+            i += 1
+            if i >= len(lines) or not lines[i].startswith("p knap"):
+                raise ValueError(f"Expected 'p knap' after line: {line}")
+            _, _, n_coins_str= lines[i].split()
+            n_coins = int(n_coins_str)
+            i += 1
+            coins = []
+            # Read next n_coins lines
+            for _ in range(n_coins):
+                if i >= len(lines) or lines[i].startswith("c "):
+                    break
+                parts = lines[i].replace(",", " ").split()
+                if len(parts) >= 1:
+                    coin = int(parts[0])
+                    coins.append((coin))
+                i += 1
+            instances.append((instance_id, target, coins))
+        else:
+            i += 1
+
+    return instances
