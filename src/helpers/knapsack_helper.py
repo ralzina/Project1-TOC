@@ -123,7 +123,7 @@ class KnapsackAbstractClass(ABC):
                 t0 = time.perf_counter()
                 bt_ok, bt_assign = self.knapsack_bruteforce(target, coins)
                 bt_time = time.perf_counter() - t0
-                results.append([instance_id, target, len(coins),
+                results.append([instance_id, target, sum(coins.values()),
                         "BruteForce", "YES" if bt_ok else "NO",
                         f"{bt_time:.6f}", str(bt_assign)])
 
@@ -137,7 +137,7 @@ class KnapsackAbstractClass(ABC):
                 t0 = time.perf_counter()
                 bt_ok, bt_assign = self.knapsack_backtracking(target, coins)
                 bt_time = time.perf_counter() - t0
-                results.append([instance_id, target, len(coins),
+                results.append([instance_id, target, sum(coins.values()),
                         "BackTracking", "YES" if bt_ok else "NO",
                         f"{bt_time:.6f}", str(bt_assign)])
         
@@ -151,7 +151,7 @@ class KnapsackAbstractClass(ABC):
                 t0 = time.perf_counter()
                 bt_ok, bt_assign = self.knapsack_simple(target, coins)
                 bt_time = time.perf_counter() - t0
-                results.append([instance_id, target, len(coins),
+                results.append([instance_id, target, sum(coins.values()),
                         "Simple", "YES" if bt_ok else "NO",
                         f"{bt_time:.6f}", str(bt_assign)])
         
@@ -166,7 +166,7 @@ class KnapsackAbstractClass(ABC):
                 t0 = time.perf_counter()
                 bt_ok, bt_assign = self.knapsack_bestcase(target, coins)
                 bt_time = time.perf_counter() - t0
-                results.append([instance_id, target, len(coins),
+                results.append([instance_id, target, sum(coins.values()),
                         "BestCase", "YES" if bt_ok else "NO",
                         f"{bt_time:.6f}", str(bt_assign)])
         

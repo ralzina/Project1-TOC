@@ -105,18 +105,18 @@ def parse_multi_instance_knapsack(path: str):
             i += 1
             if i >= len(lines) or not lines[i].startswith("p knap"):
                 raise ValueError(f"Expected 'p knap' after line: {line}")
-            _, _, n_coins_str= lines[i].split()
-            n_coins = int(n_coins_str)
+            _, _, unique_coins_str= lines[i].split()
+            unique_coins = int(unique_coins_str)
             i += 1
             coins = defaultdict(int)
             # Read next n_coins lines
-            for _ in range(n_coins):
+            for _ in range(unique_coins):
                 if i >= len(lines) or lines[i].startswith("c "):
                     break
                 parts = lines[i].replace(",", " ").split()
-                if len(parts) >= 1:
+                if len(parts) >= 2:
                     coin = int(parts[0])
-                    coins[coin] += 1
+                    coins[coin] = int(parts[1])
                 i += 1
             instances.append((instance_id, target, coins))
         else:

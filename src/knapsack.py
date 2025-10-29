@@ -8,28 +8,31 @@ INPUT FORMAT (multi-instance file):
 Each instance starts with a comment and a problem definition:
 
 c <instance_id> <target_value> <status?>
-p knap <n_coins>
-d
-d
-d
+p knap <unique_coins>
+u v
+u v
+u v
 ...
+
+u is the value of the coin
+v is the amount of that coin available
 
 Example:
 c 1 17 ?
 p knap 5
-3
-5
-11
-7
-2
+3 3
+5 2
+11 1
+7 9
+2 3
 c 2 30 ?
 p knap 6
-4
-6
-10
-11
-13
-14
+7 1
+20 1
+17 4
+15 2
+19 5
+14 12
 
 OUTPUT:
 -------
