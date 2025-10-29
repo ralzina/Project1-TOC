@@ -7,6 +7,7 @@ import json
 import csv
 import time
 from src.helpers.project_selection_enum import ProjectSelection, SubProblemSelection
+import matplotlib.pyplot as plt
 
 
 class KnapsackAbstractClass(ABC):
@@ -57,6 +58,46 @@ class KnapsackAbstractClass(ABC):
                     "method", "feasible", "time_seconds", "coin_combination"])
             w.writerows(run_results)
         print(f"\nResults written to {temp_result}")
+
+        # Plot
+        plot_filename = os.path.splitext(temp_result)[0] + ".png"
+
+        # Extract data
+        x_green = []
+        y_green = []
+        x_red = []
+        y_red = []
+
+        for row in run_results:
+            n_coins = int(row[2])
+            time_sec = float(row[5])
+            feasible = row[4]
+
+            if feasible == "YES":
+                x_green.append(n_coins)
+                y_green.append(time_sec)
+            else:
+                x_red.append(n_coins)
+                y_red.append(time_sec)
+
+        # Create plot
+        plt.figure(figsize=(8,5))
+        plt.scatter(x_green, y_green, color='green', label='Feasible')
+        plt.scatter(x_red, y_red, color='red', label='Not feasible')
+        plt.xlabel("Number of Coins (Problem Size)")
+        plt.ylabel("Time (seconds)")
+        plt.title(f"Knapsack Runtime vs Problem Size ({sub_problem})")
+        plt.legend()
+        plt.grid(True)
+        plt.tight_layout()
+
+        # Save plot to same folder as CSV
+        plt.savefig(plot_filename)
+        plt.close()
+        print(f"Plot saved to {plot_filename}")
+
+    def plot(self, plot_file_name):
+        pass
     
     @abstractmethod
     def knapsack_backtracking(self, target: int, coins: List[int]) -> Tuple[bool, Optional[Dict[int, bool]]]:

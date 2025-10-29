@@ -34,11 +34,11 @@ p knap 6
 OUTPUT:
 -------
 A CSV file named 'resultsfile.csv' with columns:
-instance_id, target_value, n_coins method, feasible, time_seconds, subset
+instance_id, target, n_coins method, feasible, time_seconds, coin_combination
 
 EXAMPLE OUTPUT
 --------------
-instance_id,n_coins,target_value,method,feasible,time_seconds,subset
+instance_id,n_coins,target_value,method,feasible,time_seconds,coin_combination
 1,17,5,BruteForce,YES,0.000145,"{3:1,5:1,7:1,2:1}"
 2,30,6,BruteForce,NO,0.000089,{}
 """
