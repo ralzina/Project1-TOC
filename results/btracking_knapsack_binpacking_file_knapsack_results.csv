@@ -1,5 +1,5 @@
 instance_id,target,n_coins,method,feasible,time_seconds,coin_combination
-1,0,0,BackTracking,NO,0.000000,None
+1,0,0,BackTracking,NO,0.000001,None
 2,2,0,BackTracking,NO,0.000000,None
 3,1,1,BackTracking,NO,0.000000,None
 4,3,1,BackTracking,NO,0.000000,None
