@@ -1,5 +1,6 @@
 import os
 from typing import List, Tuple
+from collections import defaultdict
 
 def parse_multi_instance_dimacs(path: str) -> Tuple[str, int, List[List[int]]]:
     """
@@ -107,7 +108,7 @@ def parse_multi_instance_knapsack(path: str):
             _, _, n_coins_str= lines[i].split()
             n_coins = int(n_coins_str)
             i += 1
-            coins = []
+            coins = defaultdict(int)
             # Read next n_coins lines
             for _ in range(n_coins):
                 if i >= len(lines) or lines[i].startswith("c "):
@@ -115,7 +116,7 @@ def parse_multi_instance_knapsack(path: str):
                 parts = lines[i].replace(",", " ").split()
                 if len(parts) >= 1:
                     coin = int(parts[0])
-                    coins.append((coin))
+                    coins[coin] += 1
                 i += 1
             instances.append((instance_id, target, coins))
         else:

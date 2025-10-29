@@ -40,7 +40,7 @@ class KnapsackAbstractClass(ABC):
             elif sub_prob["value"] == SubProblemSelection.simple.value:
                 sub_probs.append(SubProblemSelection.simple)
             elif sub_prob["value"] == SubProblemSelection.best_case.value:
-                sub_probs.append(SubProblemSelection.best_case)
+                sub_probs.append(SubProblemSelection.best_case)        
         return sub_probs
         
     def parse_input_file(self):
@@ -78,7 +78,6 @@ class KnapsackAbstractClass(ABC):
         results = []
         
         for instance_id, target, coins in self.solution_instances:
-
             if SubProblemSelection.brute_force in self.sub_problems:
                 t0 = time.perf_counter()
                 bt_ok, bt_assign = self.knapsack_bruteforce(target, coins)
@@ -86,7 +85,7 @@ class KnapsackAbstractClass(ABC):
                 results.append([instance_id, target, len(coins),
                         "BruteForce", "YES" if bt_ok else "NO",
                         f"{bt_time:.6f}", str(bt_assign)])
-        
+
         if SubProblemSelection.brute_force in self.sub_problems:
             self.save_results(results, SubProblemSelection.brute_force.name)
             results = []
