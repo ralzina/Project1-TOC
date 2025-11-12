@@ -95,8 +95,34 @@ class Knapsack(KnapsackAbstractClass):
             (False, {})
             - Since it's not solvable we return False and an empty dictionary
         """
+        if not used:
+            used = defaultdict(int)
 
-        return False, "Not implemented"
+        if target == 0:
+            return True, dict(used)
+
+        # Try each coin
+        for coin, max_count in coins.items():
+
+            # Skip used up coins
+            if used[coin] >= max_count:
+                continue
+
+            # Choose the coin
+            used[coin] += 1
+
+            # Do the backtracking using recursion
+            feasible, solution = self.knapsack_backtracking(target - coin, coins, used)
+
+            if feasible:
+                return True, solution
+
+            # Backtrack 
+            used[coin] -= 1
+
+        # No solution
+        return False, {}
+
 
     def knapsack_bruteforce(self, target: int, coins: Dict[int,int], used: Dict[int,int] = None) -> Tuple[bool, Optional[Dict[int,int]]]:
         """

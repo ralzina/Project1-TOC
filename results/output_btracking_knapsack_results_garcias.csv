@@ -1,17 +1,17 @@
 instance_id,target,n_coins,method,feasible,time_seconds,coin_combination
-1,0,0,BackTracking,NO,0.000001,Not implemented
-2,2,0,BackTracking,NO,0.000000,Not implemented
-3,1,1,BackTracking,NO,0.000000,Not implemented
-4,3,1,BackTracking,NO,0.000000,Not implemented
-5,5,2,BackTracking,NO,0.000000,Not implemented
-6,4,2,BackTracking,NO,0.000000,Not implemented
-7,10,3,BackTracking,NO,0.000000,Not implemented
-8,25,3,BackTracking,NO,0.000000,Not implemented
-9,40,4,BackTracking,NO,0.000000,Not implemented
-10,29,4,BackTracking,NO,0.000000,Not implemented
-11,45,5,BackTracking,NO,0.000000,Not implemented
-12,37,5,BackTracking,NO,0.000000,Not implemented
-13,109,6,BackTracking,NO,0.000000,Not implemented
-14,38,6,BackTracking,NO,0.000000,Not implemented
-15,19,7,BackTracking,NO,0.000000,Not implemented
-16,289,7,BackTracking,NO,0.000000,Not implemented
+1,0,0,BackTracking,YES,0.000004,{}
+2,2,0,BackTracking,NO,0.000002,{}
+3,1,1,BackTracking,YES,0.000004,{1: 1}
+4,3,1,BackTracking,NO,0.000003,{}
+5,5,2,BackTracking,YES,0.000002,"{2: 1, 3: 1}"
+6,4,2,BackTracking,NO,0.000002,{}
+7,10,3,BackTracking,YES,0.000002,"{7: 1, 3: 1}"
+8,25,3,BackTracking,NO,0.000006,{}
+9,40,4,BackTracking,YES,0.000002,"{15: 2, 10: 1}"
+10,29,4,BackTracking,NO,0.000009,{}
+11,45,5,BackTracking,YES,0.000002,"{5: 1, 18: 1, 11: 2}"
+12,37,5,BackTracking,NO,0.000009,{}
+13,109,6,BackTracking,YES,0.000019,"{38: 0, 19: 1, 45: 2}"
+14,38,6,BackTracking,NO,0.000048,{}
+15,19,7,BackTracking,YES,0.000003,"{14: 0, 12: 1, 7: 1}"
+16,289,7,BackTracking,NO,0.000019,{}
