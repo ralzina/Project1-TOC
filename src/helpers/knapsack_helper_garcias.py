@@ -51,7 +51,7 @@ class KnapsackAbstractClass(ABC):
         # Write to CSV
         dir_name, file_name = os.path.split(self.file_input_path)
         file_name_only, ext = os.path.splitext(file_name)
-        temp_result = os.path.join(self.results_folder_path, f"output_{sub_problem}_{file_name_only}_{self.result_file_name}_garcias.csv")
+        temp_result = os.path.join(self.results_folder_path, f"output_{sub_problem}_{self.result_file_name}_garcias.csv")
         with open(temp_result, "w", newline="") as f:
             w = csv.writer(f)
             w.writerow(["instance_id", "target", "n_coins",

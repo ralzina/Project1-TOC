@@ -9,9 +9,9 @@ instance_id,target,n_coins,method,feasible,time_seconds,coin_combination
 8,25,3,BruteForce,NO,0.000004,{}
 9,40,4,BruteForce,YES,0.000001,"{15: 2, 10: 1}"
 10,29,4,BruteForce,NO,0.000009,{}
-11,45,5,BruteForce,YES,0.000001,"{5: 1, 18: 1, 11: 2}"
-12,37,5,BruteForce,NO,0.000003,{}
-13,109,6,BruteForce,YES,0.000035,"{38: 0, 19: 1, 45: 2}"
-14,38,6,BruteForce,NO,0.000023,{}
-15,19,7,BruteForce,YES,0.000065,"{14: 0, 12: 1, 7: 1}"
-16,289,7,BruteForce,NO,0.000055,{}
+11,45,5,BruteForce,YES,0.000002,"{5: 1, 18: 1, 11: 2}"
+12,37,5,BruteForce,NO,0.000004,{}
+13,109,6,BruteForce,YES,0.000031,"{38: 0, 19: 1, 45: 2}"
+14,38,6,BruteForce,NO,0.000018,{}
+15,19,7,BruteForce,YES,0.000070,"{14: 0, 12: 1, 7: 1}"
+16,289,7,BruteForce,NO,0.000062,{}
