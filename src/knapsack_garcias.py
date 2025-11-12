@@ -61,19 +61,55 @@ class Knapsack(KnapsackAbstractClass):
     """
 
     def knapsack_backtracking(self, target: int, coins: Dict[int, int], used: Dict[int,int] = None) -> Tuple[bool, Optional[List[int]]]:
+        """
+            Generates a backtracking solution by trying all possible combinations and pruning combinations that have become invalid
+            
+            This recursive function tries using one of each coin recursively to try all combinations.
+            In each recursive call, it subtracts the used coin to the target.
+            If the target ever reaches exactly 0, there is a solution, but if not there isn't.
+            If the target goes below 0, then it stops checking, prunes that combination and backtracks to try a new one.
+            
+            Params
+            - target: amount that must be reached
+            - coins: dictionary of coin values and count pairs
+            - used: dictionary of used coin values and count pairs
+            
+            Return
+            Tuple[
+                bool: True if you can make a combination of coins to reach target or False if you can't,
+                Optional[Dict[int,int]]: value, count pairs of each coin used and what quantity
+            ]
+
+            Example
+            This is just for demonstration, but it's not a valid runnable test
+            >>> coins = {1: 5, 4: 2}
+            >>> target = 6
+            knapsack_backtracking(target, coins)
+            (True, {1: 2, 4: 1})
+            - This means 2 coins of value 1 and 1 coin of value 4 = 6
+            and note using 6 1's is not possible since only 5 1's exist
+
+            >>> coins = {1: 5, 4: 2}
+            >>> target = 11
+            knapsack_backtracking(target, coins)
+            (False, {})
+            - Since it's not solvable we return False and an empty dictionary
+        """
+
         return False, "Not implemented"
 
     def knapsack_bruteforce(self, target: int, coins: Dict[int,int], used: Dict[int,int] = None) -> Tuple[bool, Optional[Dict[int,int]]]:
-            """
-            Generates a brute force solution by trying all possible combinations
+        """
+            Generates a brute force solution by trying all valid combinations
             
             This recursive function tries using one of each coin recursively to try all combinations.
             In each recursive call, it subtracts the used coin to the target.
             If the target ever reaches exactly 0, there is a solution, but if not there isn't.
             
             Params
-            - coins: dictionary of coin values and count pairs
             - target: amount that must be reached
+            - coins: dictionary of coin values and count pairs
+            - used: dictionary of used coin values and count pairs
             
             Return
             Tuple[
@@ -89,36 +125,87 @@ class Knapsack(KnapsackAbstractClass):
             (True, {1: 2, 4: 1})
             - This means 2 coins of value 1 and 1 coin of value 4 = 6
             and note using 6 1's is not possible since only 5 1's exist
-            """
 
-            if not used:
-                used = defaultdict(int)
+            >>> coins = {1: 5, 4: 2}
+            >>> target = 11
+            knapsack_backtracking(target, coins)
+            (False, {})
+            - Since it's not solvable we return False and an empty dictionary
+        """
 
-            if target == 0:
-                return True, dict(used)
+        if not used:
+            used = defaultdict(int)
+
+        if target == 0:
+            return True, dict(used)
             
-            # Go through coins
-            for coin in coins:
-                # If no more coins available, continue
-                if used[coin] >= coins[coin]:
-                    continue
-                
-                # If a coin is available, use and subtract the value from target
-                used[coin] += 1
-                feasible, solution = self.knapsack_bruteforce(target-coin,coins,used)
+        # Go through coins
+        for coin in coins:
+            # If no more coins available, continue
+            if used[coin] >= coins[coin]:
+                continue
+            
+            # If a coin is available, use and subtract the value from target
+            used[coin] += 1
+            feasible, solution = self.knapsack_bruteforce(target-coin,coins,used)
 
-                # If we reached a solution, return
-                if feasible:
-                    return True, dict(solution)
+            # If we reached a solution, return
+            if feasible:
+                return True, dict(solution)
+            
+            # Restore original count
+            used[coin] -= 1
 
-                # Restore original count
-                used[coin] -= 1
-
-            # If no solution worked, return False
-            return False, {}               
+        # If no solution worked, return False
+        return False, {}               
 
     def knapsack_simple(self, target: int, coins: Dict[int, int], used: Dict[int,int] = None) -> Tuple[bool, Optional[List[int]]]:
         return False, "Not implemented"
 
-    def knapsack_bestcase(self, target: int, coins: Dict[int, int], used: Dict[int,int] = None) -> Tuple[bool, Optional[List[int]]]:
+    def knapsack_bestcase(self, target: int, coins: Dict[int, int], used: Dict[int,int] = None, best: Dict[int,int] = None) -> Tuple[bool, Optional[List[int]]]:
+        """
+            Generates a best case solution by trying all valid combinations
+            
+            This recursive function tries using one of each coin recursively to try all combinations.
+            In each recursive call, it subtracts the used coin to the target.
+            If the target ever reaches exactly 0, there is a solution, but if not there isn't.
+            If the target goes below 0, then it stops checking, prunes that combination and backtracks to try a new one.
+            At each iteration, it keeps track of the current used coins, and if the sum of the current used coins
+            is better than the best case combination of coins, it updates the best case combination of coins to the
+            combination of the current used coins.
+            This way, if we reach the target we return the combination of coins that reaches that exact target, but
+            if the target is impossible to reach, we return the combination of coins that gets closest to the
+            target without going past it.
+            
+            Params
+            - target: amount that must be reached
+            - coins: dictionary of coin values and count pairs
+            - used: dictionary of used coin values and count pairs
+            - best: dictionary of best case of used coin values and coint pairs
+            
+            Return
+            Tuple[
+                bool: True if you can make a combination of coins to reach target or False if you can't,
+                Optional[Dict[int,int]]: value, count pairs of each coin used and what quantity
+            ]
+
+            Example
+            This is just for demonstration, but it's not a valid runnable test
+            >>> coins = {1: 5, 4: 2}
+            >>> target = 6
+            knapsack_bestcase(target, coins)
+            (True, {1: 2, 4: 1})
+            - This means 2 coins of value 1 and 1 coin of value 4 = 6
+            and note using 6 1's is not possible since only 5 1's exist
+
+            >>> coins = {3: 2, 11: 5}
+            >>> target = 32
+            knapsack_bestcase(target, coins)
+            (False, {3: 2, 11: 2})
+            - This means 2 coins of value 3 and 2 coins of value 11 = 28
+            which is the closest we can get to 32 without going past it
+            given our combination of coins. We stil return false in our 
+            tuple because it's not solvable.
+        """
+        
         return False, "Not implemented"
