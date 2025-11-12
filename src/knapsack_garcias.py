@@ -46,7 +46,7 @@ instance_id,n_coins,target_value,method,feasible,time_seconds,coin_combination
 2,30,6,BruteForce,NO,0.000089,{}
 """
 
-from src.helpers.knapsack_helper import KnapsackAbstractClass
+from src.helpers.knapsack_helper_garcias import KnapsackAbstractClass
 from typing import List, Optional, Tuple, Dict
 from collections import defaultdict
 
@@ -60,8 +60,8 @@ class Knapsack(KnapsackAbstractClass):
         of the CSV file just focus on the logic
     """
 
-    def knapsack_backtracking(self, target: int, coins: List[int]) -> Tuple[bool, Optional[List[int]]]:
-        return False, None
+    def knapsack_backtracking(self, target: int, coins: Dict[int, int], used: Dict[int,int] = None) -> Tuple[bool, Optional[List[int]]]:
+        return False, "Not implemented"
 
     def knapsack_bruteforce(self, target: int, coins: Dict[int,int], used: Dict[int,int] = None) -> Tuple[bool, Optional[Dict[int,int]]]:
             """
@@ -82,9 +82,10 @@ class Knapsack(KnapsackAbstractClass):
             ]
 
             Example
+            This is just for demonstration, but it's not a valid runnable test
             >>> coins = {1: 5, 4: 2}
             >>> target = 6
-            >>> knapsack_bruteforce(coins,counts,target)
+            knapsack_bruteforce(target, coins)
             (True, {1: 2, 4: 1})
             - This means 2 coins of value 1 and 1 coin of value 4 = 6
             and note using 6 1's is not possible since only 5 1's exist
@@ -116,8 +117,8 @@ class Knapsack(KnapsackAbstractClass):
             # If no solution worked, return False
             return False, {}               
 
-    def knapsack_simple(self, target: int, coins: List[int]) -> Tuple[bool, Optional[List[int]]]:
-        pass
+    def knapsack_simple(self, target: int, coins: Dict[int, int], used: Dict[int,int] = None) -> Tuple[bool, Optional[List[int]]]:
+        return False, "Not implemented"
 
-    def knapsack_bestcase(self, target: int, coins: List[int]) -> Tuple[bool, Optional[List[int]]]:
-        return False, None
+    def knapsack_bestcase(self, target: int, coins: Dict[int, int], used: Dict[int,int] = None) -> Tuple[bool, Optional[List[int]]]:
+        return False, "Not implemented"

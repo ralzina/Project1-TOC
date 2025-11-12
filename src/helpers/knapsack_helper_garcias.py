@@ -51,7 +51,7 @@ class KnapsackAbstractClass(ABC):
         # Write to CSV
         dir_name, file_name = os.path.split(self.file_input_path)
         file_name_only, ext = os.path.splitext(file_name)
-        temp_result = os.path.join(self.results_folder_path, f"{sub_problem}_{file_name_only}_{self.result_file_name}.csv")
+        temp_result = os.path.join(self.results_folder_path, f"output_{sub_problem}_{file_name_only}_{self.result_file_name}_garcias.csv")
         with open(temp_result, "w", newline="") as f:
             w = csv.writer(f)
             w.writerow(["instance_id", "target", "n_coins",
@@ -60,7 +60,7 @@ class KnapsackAbstractClass(ABC):
         print(f"\nResults written to {temp_result}")
 
         # Plot
-        plot_filename = os.path.splitext(temp_result)[0] + ".png"
+        plot_filename = os.path.splitext(temp_result.replace("output_", "plot_"))[0] + ".png"
 
         # Extract data
         x_green = []
@@ -118,7 +118,7 @@ class KnapsackAbstractClass(ABC):
     def run(self):
         results = []
         
-        for instance_id, target, coins in self.solution_instances:
+        for instance_id, target, coins, solvable in self.solution_instances:
             if SubProblemSelection.brute_force in self.sub_problems:
                 t0 = time.perf_counter()
                 bt_ok, bt_assign = self.knapsack_bruteforce(target, coins)
@@ -131,7 +131,7 @@ class KnapsackAbstractClass(ABC):
             self.save_results(results, SubProblemSelection.brute_force.name)
             results = []
 
-        for instance_id, target, coins in self.solution_instances:
+        for instance_id, target, coins, solvable in self.solution_instances:
 
             if SubProblemSelection.btracking in self.sub_problems:
                 t0 = time.perf_counter()
@@ -145,7 +145,7 @@ class KnapsackAbstractClass(ABC):
             self.save_results(results, SubProblemSelection.btracking.name)
             results = []
 
-        for instance_id, target, coins in self.solution_instances:
+        for instance_id, target, coins, solvable in self.solution_instances:
 
             if SubProblemSelection.simple in self.sub_problems:
                 t0 = time.perf_counter()
@@ -160,7 +160,7 @@ class KnapsackAbstractClass(ABC):
             results = []
         
 
-        for instance_id, target, coins in self.solution_instances:
+        for instance_id, target, coins, solvable in self.solution_instances:
 
             if SubProblemSelection.best_case in self.sub_problems:
                 t0 = time.perf_counter()
