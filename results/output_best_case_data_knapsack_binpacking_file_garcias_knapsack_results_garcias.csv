@@ -1,0 +1,17 @@
+instance_id,target,n_coins,method,feasible,time_seconds,coin_combination
+1,0,0,BestCase,NO,0.000001,Not implemented
+2,2,0,BestCase,NO,0.000000,Not implemented
+3,1,1,BestCase,NO,0.000000,Not implemented
+4,3,1,BestCase,NO,0.000000,Not implemented
+5,5,2,BestCase,NO,0.000000,Not implemented
+6,4,2,BestCase,NO,0.000000,Not implemented
+7,10,3,BestCase,NO,0.000000,Not implemented
+8,25,3,BestCase,NO,0.000000,Not implemented
+9,40,4,BestCase,NO,0.000000,Not implemented
+10,29,4,BestCase,NO,0.000000,Not implemented
+11,45,5,BestCase,NO,0.000000,Not implemented
+12,37,5,BestCase,NO,0.000000,Not implemented
+13,109,6,BestCase,NO,0.000000,Not implemented
+14,38,6,BestCase,NO,0.000000,Not implemented
+15,19,7,BestCase,NO,0.000000,Not implemented
+16,289,7,BestCase,NO,0.000000,Not implemented
