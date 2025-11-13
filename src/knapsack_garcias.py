@@ -25,7 +25,7 @@ p knap 5
 11 1
 7 9
 2 3
-c 2 30 ?
+c 2 29 ?
 p knap 6
 7 1
 20 1
@@ -36,14 +36,14 @@ p knap 6
 
 OUTPUT:
 -------
-A CSV file named 'resultsfile.csv' with columns:
+A CSV file named 'output_<subproblem>_knapsack_results_garcias.csv' with columns:
 instance_id, target, n_coins method, feasible, time_seconds, coin_combination
 
 EXAMPLE OUTPUT
 --------------
 instance_id,n_coins,target_value,method,feasible,time_seconds,coin_combination
 1,17,5,BruteForce,YES,0.000145,"{3:1,5:1,7:1,2:1}"
-2,30,6,BruteForce,NO,0.000089,{}
+2,29,6,BruteForce,NO,0.000089,{}
 """
 
 from src.helpers.knapsack_helper_garcias import KnapsackAbstractClass
@@ -100,6 +100,10 @@ class Knapsack(KnapsackAbstractClass):
 
         if target == 0:
             return True, dict(used)
+        
+        # If combination of coins is no longer valid, prune this combination and backtrack
+        if target < 0:
+            return False, {}
 
         # Try each coin
         for coin, max_count in coins.items():
