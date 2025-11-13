@@ -9,9 +9,9 @@ instance_id,target,n_coins,method,feasible,time_seconds,coin_combination
 8,25,3,BackTracking,NO,0.000003,{}
 9,40,4,BackTracking,YES,0.000001,"{15: 2, 10: 1}"
 10,29,4,BackTracking,NO,0.000005,{}
-11,45,5,BackTracking,YES,0.000002,"{5: 1, 18: 1, 11: 2}"
+11,45,5,BackTracking,YES,0.000001,"{5: 1, 18: 1, 11: 2}"
 12,37,5,BackTracking,NO,0.000005,{}
 13,109,6,BackTracking,YES,0.000010,"{38: 0, 19: 1, 45: 2}"
-14,38,6,BackTracking,NO,0.000022,{}
-15,19,7,BackTracking,YES,0.000001,"{14: 0, 12: 1, 7: 1}"
-16,289,7,BackTracking,NO,0.000007,{}
+14,38,6,BackTracking,NO,0.000026,{}
+15,19,7,BackTracking,YES,0.000002,"{14: 0, 12: 1, 7: 1}"
+16,289,7,BackTracking,NO,0.000010,{}

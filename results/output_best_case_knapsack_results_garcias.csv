@@ -1,7 +1,7 @@
 instance_id,target,n_coins,method,feasible,time_seconds,coin_combination
 1,0,0,BestCase,YES,0.000004,{}
 2,2,0,BestCase,NO,0.000002,{}
-3,1,1,BestCase,YES,0.000005,{1: 1}
+3,1,1,BestCase,YES,0.000004,{1: 1}
 4,3,1,BestCase,NO,0.000003,{2: 1}
 5,5,2,BestCase,YES,0.000004,"{2: 1, 3: 1}"
 6,4,2,BestCase,NO,0.000003,{1: 2}
@@ -9,9 +9,9 @@ instance_id,target,n_coins,method,feasible,time_seconds,coin_combination
 8,25,3,BestCase,NO,0.000006,"{10: 1, 12: 1}"
 9,40,4,BestCase,YES,0.000003,"{15: 2, 10: 1}"
 10,29,4,BestCase,NO,0.000009,"{10: 1, 18: 1}"
-11,45,5,BestCase,YES,0.000005,"{5: 1, 18: 1, 11: 2}"
-12,37,5,BestCase,NO,0.000016,"{3: 4, 18: 1}"
+11,45,5,BestCase,YES,0.000004,"{5: 1, 18: 1, 11: 2}"
+12,37,5,BestCase,NO,0.000013,"{3: 4, 18: 1}"
 13,109,6,BestCase,YES,0.000020,"{38: 0, 19: 1, 45: 2}"
-14,38,6,BestCase,NO,0.000064,"{1: 1, 2: 4, 19: 1}"
+14,38,6,BestCase,NO,0.000074,"{1: 1, 2: 4, 19: 1}"
 15,19,7,BestCase,YES,0.000003,"{14: 0, 12: 1, 7: 1}"
 16,289,7,BestCase,NO,0.000015,"{238: 1, 19: 2}"
