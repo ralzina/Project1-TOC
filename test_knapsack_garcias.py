@@ -89,7 +89,7 @@ def test_knapsack_backtracking(solver):
             assert bt_ok == expected
 
 def test_knapsack_bestcase():
-    solver = Knapsack(TEST_BESTCASE_FILE)  # your solver
+    solver = Knapsack(TEST_BESTCASE_FILE) 
     tests = parse_bestcase_file(TEST_BESTCASE_FILE)
 
     for _, target, coins, expected_dict in tests:

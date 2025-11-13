@@ -237,5 +237,42 @@ class Knapsack(KnapsackAbstractClass):
             given our combination of coins. We stil return false in our 
             tuple because it's not solvable.
         """
+
+        if not used:
+            used = defaultdict(int)
+        if best is None:
+            best = {}
+
+        curr_sum = sum(coin*cnt for coin, cnt in used.items())
+        best_sum = sum(coin*cnt for coin, cnt in best.items()) if best else 0
+
+        # Updating best sum if necessary
+        if curr_sum > best_sum:
+            best.clear()
+            for coin, cnt in used.items():
+                if cnt > 0:
+                    best[coin] = cnt
         
-        return False, "Not implemented"
+        if target == 0:
+            return True, dict(used)
+        
+        for coin, max_cnt in coins.items():
+            # Move on if coins are used up
+            if used[coin] >= max_cnt:
+                continue
+            #Pruning
+            if target - coin < 0:
+                continue
+
+            # Choosing coin then recursing with the updated target
+            used[coin] += 1
+            feasible, solution = self.knapsack_bestcase(target - coin, coins, used, best)
+            # Bringing count back
+            used[coin] -= 1
+
+            if feasible:
+                return True, dict(solution)
+
+        # If an exact sum is impossible, return the combination that got the closest
+        return False, dict(best)
+
